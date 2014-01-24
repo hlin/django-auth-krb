@@ -1,0 +1,6 @@
+*~
+*.swp
+*.pyc
+build
+dist
+django_auth_krb.egg-info
