@@ -7,7 +7,7 @@ setup(
     name="django_auth_krb",
     version=get_version(),
     description="Django kerberos authentication backend",
-    long_description=open('README.md').read(),
+    long_description=open('README.rst').read(),
     url="https://github.com/hlin/django-auth-krb/",
     author="Hypo Lin",
     author_email="hlin.pub@me.com",
