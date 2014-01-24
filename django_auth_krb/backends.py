@@ -1,7 +1,8 @@
 import kerberos
 from django.conf import settings
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
-from django.core.validators import email_re
 from django.contrib.auth.backends import ModelBackend, RemoteUserBackend
 
 
@@ -14,8 +15,11 @@ class KrbBackend(ModelBackend):
     """
 
     def authenticate(self, username=None, password=None):
-        if email_re.search(username):
+        try:
+            validate_email(username)
             username = username.split('@')[0]
+        except ValidationError:
+            pass
 
         try:
             kerberos.checkPassword(
