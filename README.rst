@@ -6,14 +6,22 @@ Django kerberos authentication backend.
 Install
 -------
 
+::
+
+    # install via pip
+    pip install django-auth-krb
+    # or install from source
     python setup.py install
 
 Usage
 -----
 
-###KrbBackend
+KrbBackend
+~~~~~~~~~~
 
-Make sure following settings are configured in `settings.py`:
+Make sure following settings are configured in ``settings.py``:
+
+::
 
     INSTALLED_APPS = (
         ...
@@ -32,7 +40,9 @@ Make sure following settings are configured in `settings.py`:
         'django_auth_krb.backends.KrbBackend',
     )
 
-Enable login/logout view in `url.py`:
+Enable login/logout view in ``url.py``:
+
+::
 
     urlpatterns = patterns('',
         ...
@@ -41,9 +51,12 @@ Enable login/logout view in `url.py`:
         ...
     )
 
-###RemoteKrbBackend
+RemoteKrbBackend
+~~~~~~~~~~~~~~~~
 
-Make sure following settings are configured in `settings.py`:
+Make sure following settings are configured in ``settings.py``:
+
+::
 
     INSTALLED_APPS = (
         ...
@@ -72,6 +85,8 @@ Make sure following settings are configured in `settings.py`:
     )
 
 Config apache as follow if you want to use RemoteKrbBackend:
+
+::
 
     NameVirtualHost *:80
 
@@ -102,7 +117,9 @@ Config apache as follow if you want to use RemoteKrbBackend:
         </Location>
     </VirtualHost>
 
-Enable login/logout view in `url.py`:
+Enable login/logout view in ``url.py``:
+
+::
 
     urlpatterns = patterns('',
         ...
