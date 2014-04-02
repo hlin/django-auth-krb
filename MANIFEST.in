@@ -1,4 +1,5 @@
 include README.rst
 include LICENSE
 include MANIFEST.in
+include django-auth-krb.spec
 recursive-include django_auth_krb/templates *

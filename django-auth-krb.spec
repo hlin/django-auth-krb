@@ -7,8 +7,8 @@ Summary:       Django kerberos authentication backend
 Name:          django-auth-krb
 Version:       %{version}
 Release:       %{release}
-URL:           https://pypi.python.org/pypi/django_auth_krb/0.1.0
-Source0:       https://pypi.python.org/packages/source/d/django_auth_krb/django_auth_krb-0.1.0.tar.gz
+URL:           https://pypi.python.org/pypi/django_auth_krb/0.1.1
+Source0:       https://pypi.python.org/packages/source/d/django_auth_krb/django_auth_krb-0.1.1.tar.gz
 License:       MIT
 Group:         Development/Libraries
 BuildRoot:     %{_tmppath}/%{srcname}-%{version}-%{release}-buildroot
@@ -44,6 +44,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Apr 2 2014 Haibo Lin <hlin@redhat.com> - 0.1.1-1
+- Bug fix
+
 * Wed Apr 2 2014 Haibo Lin <hlin@redhat.com> - 0.1.0-1
 - Initial build
 
