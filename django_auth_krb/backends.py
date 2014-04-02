@@ -1,4 +1,5 @@
 import kerberos
+import re
 from django.conf import settings
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
@@ -91,7 +92,7 @@ class RemoteKrbBackend(RemoteUserBackend):
         For more info, reference clean_username function in
         django/auth/backends.py
         """
-        if email_re.search(username):
+        if re.search('@', username):
             username = username.split('@')[0]
 
         # truncate username which length exceeds field max_length

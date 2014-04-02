@@ -80,7 +80,7 @@ Make sure following settings are configured in ``settings.py``:
         ...
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.contrib.auth.middleware.AuthenticationMiddleware',
-        'django.contrib.auth.middleware.RemoteKrbMiddleware',
+        'django_auth_krb.middleware.RemoteKrbMiddleware',
         ...
     )
 
