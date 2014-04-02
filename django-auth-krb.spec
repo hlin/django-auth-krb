@@ -1,6 +1,6 @@
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
 %define srcname django_auth_krb
-%define version 0.1.0
+%define version 0.1.1
 %define release 1
 
 Summary:       Django kerberos authentication backend
