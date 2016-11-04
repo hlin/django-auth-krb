@@ -1,24 +1,23 @@
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
 %define srcname django_auth_krb
-%define version 0.1.1
+%define version 0.2.0
 %define release 1
 
-Summary:       Django kerberos authentication backend
-Name:          django-auth-krb
-Version:       %{version}
-Release:       %{release}
-URL:           https://pypi.python.org/pypi/django_auth_krb/0.1.1
-Source0:       https://pypi.python.org/packages/source/d/django_auth_krb/django_auth_krb-0.1.1.tar.gz
-License:       MIT
-Group:         Development/Libraries
-BuildRoot:     %{_tmppath}/%{srcname}-%{version}-%{release}-buildroot
-Prefix:        %{_prefix}
-BuildArch:     noarch
+Summary: Django kerberos authentication backend
+Name: django-auth-krb
+Version: %{version}
+Release: %{release}%{?dist}
+URL: https://pypi.python.org/pypi/%{srcname}/%{version}
+Source0: https://pypi.python.org/packages/source/d/%{srcname}/%{srcname}-%{version}.tar.gz
+License: MIT
+Group: Development/Libraries
+BuildRoot: %{_tmppath}/%{srcname}-%{version}-%{release}-buildroot
+Prefix: %{_prefix}
+BuildArch: noarch
 
 BuildRequires: python-setuptools
 
-Requires:      Django >= 1.3
-Requires:      python-kerberos >= 1.1
+Requires: Django >= 1.10
 
 %description
 Django kerberos authentication backend.
@@ -44,6 +43,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Nov 4 2016 Haibo Lin <hlin@redhat.com> - 0.2.0-1
+- Update for django 1.10
+- Only support remote auth
+
 * Wed Apr 2 2014 Haibo Lin <hlin@redhat.com> - 0.1.1-1
 - Bug fix
 

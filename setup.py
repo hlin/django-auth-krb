@@ -24,12 +24,11 @@ setup(
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
-    keywords=["django", "kerberos", "authentication", "auth"],
+    keywords=["django", "kerberos", "krb5", "authentication", "auth"],
     packages=find_packages(exclude='tests'),
     include_package_data=True,
     install_requires=[
-        'Django>=1.3',
-        'kerberos==1.1.1',
+        'Django>=1.10.1',
     ],
     zip_safe=False,
 )

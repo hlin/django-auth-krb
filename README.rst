@@ -16,41 +16,6 @@ Install
 Usage
 -----
 
-KrbBackend
-~~~~~~~~~~
-
-Make sure following settings are configured in ``settings.py``:
-
-::
-
-    INSTALLED_APPS = (
-        ...
-        'django_auth_krb',
-        ...
-    )
-
-    # kerberos realm
-    KRB5_REALM = 'EXAMPLE.COM'
-
-    # redirect url after login
-    LOGIN_REDIRECT_URL = '/'
-
-    # enable kerberos auth backends
-    AUTHENTICATION_BACKENDS = (
-        'django_auth_krb.backends.KrbBackend',
-    )
-
-Enable login/logout view in ``url.py``:
-
-::
-
-    urlpatterns = patterns('',
-        ...
-        url(r'^accounts/login/$', 'django_auth_krb.views.krb_login'),
-        url(r'^accounts/logout/$', 'django_auth_krb.views.krb_logout'),
-        ...
-    )
-
 RemoteKrbBackend
 ~~~~~~~~~~~~~~~~
 
@@ -64,55 +29,63 @@ Make sure following settings are configured in ``settings.py``:
         ...
     )
 
-    # kerberos realm
     KRB5_REALM = 'EXAMPLE.COM'
 
-    # redirect url after login
+    AUTHENTICATION_BACKENDS = (
+       'django_auth_krb.backends.RemoteKrbBackend',
+    )
+
+    MIDDLEWARE = [
+        ...
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+        'django.contrib.auth.middleware.PersistentRemoteUserMiddleware',
+        ...
+    ]
+
     LOGIN_REDIRECT_URL = '/'
 
-    # enable kerberos auth backends
-    AUTHENTICATION_BACKENDS = (
-        'django_auth_krb.backends.RemoteKrbBackend',
-    )
+Include auth url in project urls.py
 
-    # enable session, auth, remoteuser middleware
-    MIDDLEWARE_CLASSES = (
+::
+
+    from django.conf.urls include
+
+    urlpatterns = [
+        url(r'^auth/', include('django_auth_krb.urls')),
         ...
-        'django.contrib.sessions.middleware.SessionMiddleware',
-        'django.contrib.auth.middleware.AuthenticationMiddleware',
-        'django_auth_krb.middleware.RemoteKrbMiddleware',
-        ...
-    )
+    ]
 
 Config apache as follow if you want to use RemoteKrbBackend:
 
 ::
 
-    NameVirtualHost *:80
-
-    <VirtualHost *:80>
+    <VirtualHost *:443>
         ServerAdmin webmaster@host.example.com
         ServerName host.example.com
+
+        SSLEngine on
+        SSLCertificateFile /etc/httpd/conf/ssl.crt
+        SSLCertificateKeyFile /etc/httpd/conf/ssl.key
 
         WSGIScriptAlias / /path/to/django/project/wsgi.py
         WSGIPassAuthorization On
 
         <Location "/">
-            SetHandler wsgi-script
+            Require all granted
         </Location>
 
-        <Location "/accounts/login">
-            # Kerberos authentication:
+        <Location "/auth/login/">
+            SSLRequireSSL
             AuthType Kerberos
-            AuthName "example - Kerberos login (if negotiate unavailable)"
+            AuthName "Kerberos login"
             KrbMethodNegotiate on
-            KrbMethodK5Passwd on
-            KrbAuthoritative on
+            KrbMethodK5Passwd off
             KrbServiceName HTTP
             KrbAuthRealm EXAMPLE.COM
-            KrbVerifyKDC on
             Krb5Keytab /etc/httpd/conf/httpd.keytab
             KrbSaveCredentials off
+            KrbVerifyKDC on
             Require valid-user
         </Location>
     </VirtualHost>
@@ -121,9 +94,11 @@ Enable login/logout view in ``url.py``:
 
 ::
 
+    from django.conf.urls import include
+
     urlpatterns = patterns('',
         ...
-        url(r'^accounts/login/$', 'django_auth_krb.views.krb_login'),
+        url(r'^auth/', include('django_auth_krb.urls')),
         ...
     )
 
